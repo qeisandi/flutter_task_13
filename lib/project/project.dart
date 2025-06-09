@@ -34,7 +34,7 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
           children: [
             const SizedBox(height: 24),
             const Text(
-              'Welcome Back',
+              'Welcome home',
               style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
             ),
             const SizedBox(height: 20),
