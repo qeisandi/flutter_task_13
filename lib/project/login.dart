@@ -1,52 +1,67 @@
+// import 'package:flutter_task_13/project/dbHelper/Db_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_task_13/project/dbHelper/db_helper.dart';
+import 'package:flutter_task_13/project/register.dart';
 
-class TugasTigaBelas extends StatefulWidget {
-  const TugasTigaBelas({super.key});
+class LoginScreen extends StatefulWidget {
+  static const String id = "/login_screen";
+  const LoginScreen({super.key});
 
   @override
-  State<TugasTigaBelas> createState() => _TugasTigaBelasState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _TugasTigaBelasState extends State<TugasTigaBelas> {
+class _LoginScreenState extends State<LoginScreen> {
   bool _hidden = true;
   bool _ikonHide = false;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   final _fromKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffE7EFC7),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Color(0xff3B3B1A),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.keyboard_arrow_left_sharp),
+          icon: Icon(Icons.keyboard_arrow_left_sharp),
+          color: Colors.white,
         ),
-        title: const Text('Login', style: TextStyle(fontFamily: 'Gilroy')),
+        title: Text(
+          'EpruvShop',
+          style: TextStyle(fontFamily: 'Gilroy', color: Colors.white),
+        ),
       ),
-      body: Padding(
+      body: Form(
         key: _fromKey,
-        padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 24),
-            const Text(
-              'Welcome home',
-              style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Sign in to your account',
-              style: TextStyle(fontSize: 14, color: Color(0xff888888)),
-            ),
-            const SizedBox(height: 28),
-            Form(
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 24),
+              Text(
+                'Login Your account',
+                style: TextStyle(
+                  fontFamily: 'Gilroy',
+                  fontSize: 24,
+                  color: Color(0xff8A784E),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Sign in to your account',
+                style: TextStyle(fontSize: 14, color: Color(0xff888888)),
+              ),
+              SizedBox(height: 28),
+              Column(
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Text(
                         'Email Address',
@@ -57,13 +72,14 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   TextFormField(
                     controller: emailC,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email_rounded),
                       hintText: 'enter username',
-                      hintStyle: const TextStyle(fontSize: 14),
+                      hintStyle: TextStyle(fontStyle: FontStyle.italic),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
                       ),
@@ -77,8 +93,8 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
-                  const Row(
+                  SizedBox(height: 20),
+                  Row(
                     children: [
                       Text(
                         'Password',
@@ -89,12 +105,14 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   TextFormField(
                     controller: passC,
                     textInputAction: TextInputAction.done,
                     obscureText: _hidden,
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.key),
+                      hintStyle: TextStyle(fontStyle: FontStyle.italic),
                       hintText: 'enter password',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -112,8 +130,8 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                         },
                         icon:
                             _ikonHide
-                                ? const Icon(Icons.visibility_outlined)
-                                : const Icon(Icons.visibility_off_outlined),
+                                ? Icon(Icons.visibility_outlined)
+                                : Icon(Icons.visibility_off_outlined),
                       ),
                     ),
                     validator: (value) {
@@ -130,47 +148,53 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                     children: [
                       Row(
                         children: [
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.symmetric(horizontal: 122),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: const Text(
+                            child: Text(
                               'Forgot Password?',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xffEA9459),
+                                color: Color(0xff8A784E),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () {
-                          if (_fromKey.currentState!.validate()) {
-                            print('Berhasil');
-                            // dialogSuccess(context);
+                        onPressed: () async {
+                          if (_fromKey.currentState!.validate()) {}
+                          // PreferenceHandler.saveLogin(true);
+                          final userData = await DbHelper.login(
+                            emailC.text,
+                            passC.text,
+                          );
+                          if (userData != null) {
+                            print('data ada ${userData.toJson()}');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Login successful")),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Invalid email or password"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
                           }
-                          // print(
-                          //   'LOGIN DENGAN : EMAIL (${emailC.text}) & PASS (${passC.text})',
-                          // );
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const MeetTiga(),
-                          //   ),
-                          // );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff283FB1),
-                          padding: const EdgeInsets.symmetric(
+                          backgroundColor: Color(0xff3B3B1A),
+                          padding: EdgeInsets.symmetric(
                             horizontal: 160,
                             vertical: 16,
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Login',
                           style: TextStyle(
                             fontFamily: 'Gilroy',
@@ -178,11 +202,11 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text.rich(
+                          Text.rich(
                             TextSpan(
                               text: 'Dont have an account?',
                               style: TextStyle(
@@ -192,20 +216,22 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
-                            child: const Text(
+                            onPressed: () {
+                              Navigator.pushNamed(context, RegisterScreen.id);
+                            },
+                            child: Text(
                               "Sign Up",
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xffEA9459),
+                                color: Color(0xff8A784E),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      const Row(
+                      SizedBox(height: 16),
+                      Row(
                         children: [
                           Expanded(child: Divider()),
                           Padding(
@@ -221,13 +247,13 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                           Expanded(child: Divider()),
                         ],
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(height: 40),
                       Row(
                         children: [
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 40,
                                 vertical: 16,
                               ),
@@ -235,8 +261,8 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                             child: Row(
                               children: [
                                 Image.asset('assets/image/Google.png'),
-                                const SizedBox(width: 20),
-                                const Text(
+                                SizedBox(width: 20),
+                                Text(
                                   'Google',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -246,11 +272,11 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 24),
+                          SizedBox(width: 24),
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 40,
                                 vertical: 16,
                               ),
@@ -258,8 +284,8 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                             child: Row(
                               children: [
                                 Image.asset("assets/image/Facebook.png"),
-                                const SizedBox(width: 20),
-                                const Text(
+                                SizedBox(width: 20),
+                                Text(
                                   'Facebook',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -271,10 +297,10 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       Row(
                         children: [
-                          const Text.rich(
+                          Text.rich(
                             TextSpan(
                               text: 'Dont have an account?',
                               style: TextStyle(
@@ -285,11 +311,11 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: const Text(
+                            child: Text(
                               "Join Us",
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xffEA9459),
+                                color: Color(0xff8A784E),
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -300,8 +326,8 @@ class _TugasTigaBelasState extends State<TugasTigaBelas> {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
