@@ -1,22 +1,13 @@
-// import 'package:andippkd_mpro_b2/meet_enam/tugas_enam_flutter.dart';
-// import 'package:andippkd_mpro_b2/input_widget/input_widget.dart';
-// import 'package:andippkd_mpro_b2/meet_delapan/tugas_delapan_flutter.dart';
-// import 'package:andippkd_mpro_b2/meet_sembilan/tugas_sembilan_c.dart';
-// import 'package:andippkd_mpro_b2/meet_sembilan/tugas_sembilan_b.dart';
-// import 'package:andippkd_mpro_b2/meet_sembilan/tugas_sembilan_flutter.dart';
-// import 'package:andippkd_mpro_b2/meet_tujuh/tugas_tujuh_flutter.dart';
-// import 'package:andippkd_mpro_b2/splash_screen/splash.dart';
-// import 'package:andippkd_mpro_b2/meet_enam/tugas_enam_flutter.dart';
-// import 'package:andippkd_mpro_b2/meet_sepuluh/tugas_sepuluh_flutter.dart';
 // import 'package:flutter_task_13/splash_screen/splash.dart';
-// import 'package:andippkd_mpro_b2/study_case/uiSiswa.dart';
-// import 'package:andippkd_mpro_b2/tugas_sebelas/tugas_sebelas.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/home_screen/home_screen.dart';
+import 'package:flutter_task_13/project/bottom_nav.dart/bottom_nav.dart';
+// import 'package:flutter_task_13/project/home_screen/edit_cart.dart';
+// import 'package:flutter_task_13/project/home_screen/home_screen.dart';
+// import 'package:flutter_task_13/project/home_screen/edit_cart.dart';
 import 'package:flutter_task_13/project/login.dart';
 import 'package:flutter_task_13/project/register.dart';
 import 'package:flutter_task_13/project/splash/splas.dart';
-// import 'package:flutter_task_13/project/splash/splas_2.dart';
+import 'package:flutter_task_13/project/splash/splas_2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +24,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
+        '/': (context) => SplashScreen(),
         '/Splash': (context) => Splash(),
+        BottomNav.id: (context) => BottomNav(),
         LoginScreen.id: (context) => LoginScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),
       },
@@ -54,9 +46,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 114, 198, 231),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xffE7EFC7)),
       ),
       // home: const SplashScreen(),
     );

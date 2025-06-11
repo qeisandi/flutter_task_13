@@ -1,5 +1,6 @@
 // import 'package:flutter_task_13/project/dbHelper/Db_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_task_13/project/bottom_nav.dart/bottom_nav.dart';
 import 'package:flutter_task_13/project/dbHelper/db_helper.dart';
 import 'package:flutter_task_13/project/register.dart';
 
@@ -21,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE7EFC7),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xff3B3B1A),
@@ -178,6 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Login successful")),
                             );
+                            Navigator.pushNamed(context, BottomNav.id);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

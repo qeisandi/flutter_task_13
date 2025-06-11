@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_task_13/project/home_screen/model_screen.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,107 +9,129 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final List<Elektronik> kategoriC = [
-  //   Elektronik(
-  //     id: "1",
-  //     productName: "PS5 X Spiderman",
-  //     productPrice: '12.000.000,00',
-  //     productImage: "assets/image/pro4.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "2",
-  //     productName: "Laptop Advan",
-  //     productPrice: '1.200.000,00',
-  //     productImage: "assets/image/pro10.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "3",
-  //     productName: "Iphone xr",
-  //     productPrice: '8.000.000,00',
-  //     productImage: "assets/image/pro9.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "4",
-  //     productName: "Iphone 16pro",
-  //     productPrice: '18.000.000,00',
-  //     productImage: "assets/image/pro5.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "5",
-  //     productName: "Nintendo Switch",
-  //     productPrice: '23.100.000,00',
-  //     productImage: "assets/image/pro1.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "6",
-  //     productName: "Vr holocaust one set",
-  //     productPrice: '40.000.000,00',
-  //     productImage: "assets/image/pro3.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "7",
-  //     productName: "TV Toshiba",
-  //     productPrice: '3.000.000,00',
-  //     productImage: "assets/image/pro2.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "8",
-  //     productName: "Vynl",
-  //     productPrice: '1.000.000,00',
-  //     productImage: "assets/image/pro7.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "9",
-  //     productName: "HTC one",
-  //     productPrice: '12.000.000,00',
-  //     productImage: "assets/image/pro6.jpg",
-  //   ),
-  //   Elektronik(
-  //     id: "10",
-  //     productName: "Smartphone samsung s24",
-  //     productPrice: '20.300.000,00',
-  //     productImage: "assets/image/pro8.jpg",
-  //   ),
-  // ];
+  final List<Widget> widgetOption = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE7EFC7),
       appBar: AppBar(
         backgroundColor: Color(0xff3B3B1A),
         centerTitle: true,
         title: Text(
-          'Your Cart',
+          'EpruvShop',
           style: TextStyle(
             fontFamily: 'Gilroy',
-            fontSize: 28,
+            fontSize: 24,
             color: Colors.white,
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            child: SingleChildScrollView(
-              child: Row(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Image.asset('assets/image/pro2.jpg', width: 40),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.blueGrey,
+                    child: CircleAvatar(
+                      radius: 37,
+                      backgroundImage: AssetImage("assets/image/cat.jpg"),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Andi Qeis',
+                        style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
+                      ),
+                      Text('Shopping List', style: TextStyle(fontSize: 13)),
+                    ],
                   ),
                 ],
               ),
             ),
-          ),
-          ListView(
+            Row(
+              children: [
+                Expanded(child: Divider()),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 8),
+                //   child: Text("ATAU"),
+                // ),
+                Expanded(child: Divider()),
+              ],
+            ),
+            ListTile(
+              leading: Icon(Icons.logout_outlined),
+              iconColor: Colors.red,
+              title: Text('Logout', style: TextStyle(fontFamily: 'Gilroy')),
+              onTap: () {
+                SystemNavigator.pop();
+                setState(() {});
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 24),
-              ListTile(
-                leading: Image.asset('assets/image/pro1.jpg'),
-                title: Text('Data', style: TextStyle(fontFamily: 'Gilroy')),
-                subtitle: Text('data\ndata\ndata'),
+              Icon(Icons.shopify, size: 40, color: Color(0xff3B3B1A)),
+              SizedBox(width: 4),
+              Text(
+                'ShoppingList',
+                style: TextStyle(
+                  fontFamily: 'Gilroy',
+                  fontSize: 36,
+                  color: Color(0xff3B3B1A),
+                ),
               ),
             ],
+          ),
+          SizedBox(height: 12),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4,
+              ),
+              itemCount: 2,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Image.asset(
+                          'assets/image/pro4.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_shopping_cart),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              // showDialog(context: context, builder: (context) {});
+            },
+            backgroundColor: Color(0xff3B3B1A),
+            child: Icon(Icons.add, color: Colors.white),
           ),
         ],
       ),

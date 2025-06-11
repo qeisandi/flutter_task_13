@@ -25,13 +25,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Color(0xff3B3B1A),
+
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(Icons.keyboard_arrow_left_sharp),
+          color: Colors.white,
         ),
-        title: Text('Register', style: TextStyle(fontFamily: 'Gilroy')),
+        title: Text(
+          'EpruvShop',
+          style: TextStyle(fontFamily: 'Gilroy', color: Colors.white),
+        ),
       ),
       body: Form(
         key: _fromKey,
@@ -44,7 +50,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: 24),
                 Text(
                   'Register Now',
-                  style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
+
+                  style: TextStyle(
+                    fontFamily: 'Gilroy',
+                    fontSize: 24,
+                    color: Color(0xff8A784E),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -206,7 +217,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 'Forgot Password?',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Color(0xffEA9459),
+                                  color: Color(0xff8A784E),
+
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
@@ -240,7 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff283FB1),
+                            backgroundColor: Color(0xff3B3B1A),
                             padding: EdgeInsets.symmetric(
                               horizontal: 140,
                               vertical: 16,
@@ -273,7 +285,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 "Sign In",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Color(0xffEA9459),
+                                  color: Color(0xff8A784E),
+
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),

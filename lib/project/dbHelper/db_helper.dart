@@ -41,4 +41,6 @@ class DbHelper {
       return null;
     }
   }
+
+  static getEditCartItems() {}
 }
