@@ -11,14 +11,16 @@ class EditCart extends StatefulWidget {
 }
 
 class _EditCartState extends State<EditCart> {
+  List<bool> _valueCheck = [];
   final TextEditingController namaC = TextEditingController();
   final TextEditingController kategoriC = TextEditingController();
   final TextEditingController hargaC = TextEditingController();
-  bool _valueCheck = false;
+
   List<Cart> daftarCart = [];
   @override
   void initState() {
     super.initState();
+    _valueCheck = List<bool>.filled(daftarCart.length, false);
     muatData();
   }
 
@@ -26,6 +28,10 @@ class _EditCartState extends State<EditCart> {
     final data = await DatabaseHelper.getAllCart();
     setState(() {
       daftarCart = data;
+      _valueCheck = List<bool>.filled(
+        daftarCart.length,
+        false,
+      ); // <-- Pindahkan ke sini
     });
   }
 
@@ -94,10 +100,15 @@ class _EditCartState extends State<EditCart> {
                       children: [
                         Checkbox(
                           activeColor: Color(0xff3B3B1A),
-                          value: _valueCheck,
+                          value: _valueCheck[index], // gunakan index
                           onChanged: (value) {
                             setState(() {
-                              _valueCheck = value!;
+                              // Reset semua ke false
+                              for (int i = 0; i < _valueCheck.length; i++) {
+                                _valueCheck[i] = false;
+                              }
+                              // Hanya index yang dicentang jadi true
+                              _valueCheck[index] = value!;
                             });
                           },
                         ),
@@ -194,7 +205,7 @@ class _EditCartState extends State<EditCart> {
 
                                       TextButton(
                                         onPressed:
-                                            _valueCheck
+                                            _valueCheck.contains(true)
                                                 ? () async {
                                                   await DatabaseHelper.deleteCart(
                                                     cart.id!,
