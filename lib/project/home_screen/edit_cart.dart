@@ -49,6 +49,7 @@ class _EditCartState extends State<EditCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Container(),
         backgroundColor: Color(0xff3B3B1A),
         centerTitle: true,
         title: Text(
