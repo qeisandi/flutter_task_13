@@ -109,7 +109,10 @@ class _EditCartState extends State<EditCart> {
                               context: context,
                               builder:
                                   (context) => AlertDialog(
-                                    title: Text('Edit Product'),
+                                    title: Text(
+                                      'Edit Product',
+                                      style: TextStyle(fontFamily: 'Gilroy'),
+                                    ),
                                     content: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [

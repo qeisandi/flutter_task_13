@@ -47,6 +47,63 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ClipRRect(
+        borderRadius: BorderRadius.circular(200),
+        child: SizedBox(
+          width: 70,
+          height: 70,
+          child: FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text(
+                        'Tambah Product',
+                        style: TextStyle(fontFamily: 'Gilroy'),
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: namaC,
+                            decoration: InputDecoration(
+                              labelText: 'Nama Produk',
+                            ),
+                          ),
+                          TextField(
+                            controller: kategoriC,
+                            decoration: InputDecoration(labelText: 'Kategori'),
+                          ),
+                          TextField(
+                            controller: hargaC,
+                            decoration: InputDecoration(labelText: 'Harga'),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Batal'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            simpanData();
+                            Navigator.pop(context);
+                          },
+                          child: Text('Simpan'),
+                        ),
+                      ],
+                    ),
+              );
+            },
+
+            backgroundColor: Color(0xff3B3B1A),
+            child: Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
+          ),
+        ),
+      ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff3B3B1A),
@@ -163,51 +220,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: Text('Tambah Product'),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextField(
-                            controller: namaC,
-                            decoration: InputDecoration(
-                              labelText: 'Nama Produk',
-                            ),
-                          ),
-                          TextField(
-                            controller: kategoriC,
-                            decoration: InputDecoration(labelText: 'Kategori'),
-                          ),
-                          TextField(
-                            controller: hargaC,
-                            decoration: InputDecoration(labelText: 'Harga'),
-                          ),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Batal'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            simpanData();
-                            Navigator.pop(context);
-                          },
-                          child: Text('Simpan'),
-                        ),
-                      ],
-                    ),
-              );
-            },
-            backgroundColor: Color(0xff3B3B1A),
-            child: Icon(Icons.add, color: Colors.white),
           ),
         ],
       ),
