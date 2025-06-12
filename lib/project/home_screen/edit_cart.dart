@@ -152,6 +152,16 @@ class _EditCartState extends State<EditCart> {
                                           );
                                           Navigator.pop(context);
                                           muatData();
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                "Berhasil Mengubah Product",
+                                              ),
+                                              backgroundColor: Colors.teal,
+                                            ),
+                                          );
                                         },
                                         child: Text('Update'),
                                       ),
