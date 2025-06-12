@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_task_13/project/dbHelper/db_helper_home.dart';
+import 'package:flutter_task_13/project/home_screen/helper/user_model_home.dart';
+import 'package:flutter_task_13/project/login.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,11 +11,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> widgetOption = [];
+  final TextEditingController namaC = TextEditingController();
+  final TextEditingController kategoriC = TextEditingController();
+  final TextEditingController hargaC = TextEditingController();
+  List<Cart> daftarCart = [];
+  @override
+  void initState() {
+    super.initState();
+    muatData();
+  }
+
+  Future<void> muatData() async {
+    final data = await DatabaseHelper.getAllCart();
+    setState(() {
+      daftarCart = data;
+    });
+  }
+
+  Future<void> simpanData() async {
+    final nama = namaC.text;
+    final kategori = kategoriC.text;
+    final harga = int.tryParse(hargaC.text) ?? 0;
+
+    if (nama.isNotEmpty && harga > 0) {
+      await DatabaseHelper.insertCart(
+        Cart(nama: nama, kategori: kategori, harga: harga),
+      );
+      namaC.clear();
+      kategoriC.clear();
+      hargaC.clear();
+      muatData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff3B3B1A),
         centerTitle: true,
         title: Text(
@@ -29,17 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           children: [
             DrawerHeader(
+              decoration: BoxDecoration(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: Colors.blueGrey,
+                    backgroundColor: Color(0xff3B3B1A),
                     child: CircleAvatar(
                       radius: 37,
                       backgroundImage: AssetImage("assets/image/cat.jpg"),
                     ),
                   ),
+                  // SizedBox(height: 10),
                   Column(
                     children: [
                       Text(
@@ -52,22 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Expanded(child: Divider()),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: 8),
-                //   child: Text("ATAU"),
-                // ),
-                Expanded(child: Divider()),
-              ],
-            ),
             ListTile(
               leading: Icon(Icons.logout_outlined),
               iconColor: Colors.red,
               title: Text('Logout', style: TextStyle(fontFamily: 'Gilroy')),
               onTap: () {
-                SystemNavigator.pop();
+                Navigator.pushNamed(context, LoginScreen.id);
                 setState(() {});
               },
             ),
@@ -95,32 +122,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 12),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              itemCount: 2,
-              itemBuilder: (BuildContext context, int index) {
+            child: ListView.builder(
+              itemCount: daftarCart.length,
+              itemBuilder: (context, index) {
+                final Cart = daftarCart[index];
                 return Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Image.asset(
-                          'assets/image/pro4.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add_shopping_cart),
-                        onPressed: () {},
-                      ),
-                    ],
+                  child: ListTile(
+                    leading: CircleAvatar(child: Text('${Cart.id}')),
+                    title: Text(
+                      Cart.nama,
+                      style: TextStyle(fontFamily: 'Gilroy'),
+                    ),
+                    subtitle: Text(
+                      'kategori : ${Cart.kategori}\nharga : ${Cart.harga}',
+                      style: TextStyle(fontWeight: FontWeight.w400),
+                    ),
                   ),
                 );
               },
@@ -128,7 +144,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           FloatingActionButton(
             onPressed: () {
-              // showDialog(context: context, builder: (context) {});
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text('Tambah Product'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: namaC,
+                            decoration: InputDecoration(
+                              labelText: 'Nama Produk',
+                            ),
+                          ),
+                          TextField(
+                            controller: kategoriC,
+                            decoration: InputDecoration(labelText: 'Kategori'),
+                          ),
+                          TextField(
+                            controller: hargaC,
+                            decoration: InputDecoration(labelText: 'Harga'),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Batal'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            simpanData();
+                            Navigator.pop(context);
+                          },
+                          child: Text('Simpan'),
+                        ),
+                      ],
+                    ),
+              );
             },
             backgroundColor: Color(0xff3B3B1A),
             child: Icon(Icons.add, color: Colors.white),

@@ -9,7 +9,7 @@ class DatabaseHelper {
       join(dbPath, 'cart.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE cart(id INTEGER PRIMARY KEY AUTOINCREMENT, nama TEXT,kategori TEXT,harga INTEGER,)',
+          'CREATE TABLE cart(id INTEGER PRIMARY KEY AUTOINCREMENT, nama TEXT,kategori TEXT,harga INTEGER)',
         );
       },
       version: 1,
@@ -27,7 +27,7 @@ class DatabaseHelper {
 
   static Future<List<Cart>> getAllCart() async {
     final db = await DatabaseHelper.db();
-    final List<Map<String, dynamic>> maps = await db.query('belanjaan');
+    final List<Map<String, dynamic>> maps = await db.query('cart');
 
     return List.generate(maps.length, (i) => Cart.fromMap(maps[i]));
   }
