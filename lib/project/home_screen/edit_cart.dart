@@ -189,23 +189,27 @@ class _EditCartState extends State<EditCart> {
                                       ),
 
                                       TextButton(
-                                        onPressed: () async {
-                                          await DatabaseHelper.deleteCart(
-                                            cart.id!,
-                                          );
-                                          muatData();
-                                          Navigator.pop(context);
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                "Berhasil Melakukan Pembatalan",
-                                              ),
-                                              backgroundColor: Colors.teal,
-                                            ),
-                                          );
-                                        },
+                                        onPressed:
+                                            _valueCheck
+                                                ? () async {
+                                                  await DatabaseHelper.deleteCart(
+                                                    cart.id!,
+                                                  );
+                                                  muatData();
+                                                  Navigator.pop(context);
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        "Berhasil Melakukan Pembatalan",
+                                                      ),
+                                                      backgroundColor:
+                                                          Colors.teal,
+                                                    ),
+                                                  );
+                                                }
+                                                : null,
                                         child: Text("Lanjut"),
                                       ),
                                     ],
