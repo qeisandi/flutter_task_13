@@ -94,8 +94,30 @@ class _HomeScreenState extends State<HomeScreen> {
               iconColor: Colors.red,
               title: Text('Logout', style: TextStyle(fontFamily: 'Gilroy')),
               onTap: () {
-                Navigator.pushNamed(context, LoginScreen.id);
-                setState(() {});
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => AlertDialog(
+                          title: Text('Apakah anda yakin ingin\nlogout?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Tidak"),
+                            ),
+
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.pushNamed(context, LoginScreen.id);
+                              },
+                              child: Text("Iya"),
+                            ),
+                          ],
+                        ),
+                  );
+                });
               },
             ),
           ],

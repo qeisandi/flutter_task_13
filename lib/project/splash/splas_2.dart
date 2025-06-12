@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/Helper/preference.dart';
+import 'package:flutter_task_13/Helper/prefernce_helper.dart';
 import 'package:flutter_task_13/project/splash/splas.dart';
 
 class SplashScreen extends StatefulWidget {
