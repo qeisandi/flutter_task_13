@@ -1,13 +1,10 @@
-// import 'package:flutter_task_13/splash_screen/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/bottom_nav.dart/bottom_nav.dart';
-// import 'package:flutter_task_13/project/home_screen/edit_cart.dart';
-// import 'package:flutter_task_13/project/home_screen/home_screen.dart';
-// import 'package:flutter_task_13/project/home_screen/edit_cart.dart';
-import 'package:flutter_task_13/project/login.dart';
-import 'package:flutter_task_13/project/register.dart';
-import 'package:flutter_task_13/project/splash/splas.dart';
-import 'package:flutter_task_13/project/splash/splas_2.dart';
+import 'package:flutter_task_13/main/bottom_nav.dart/bottom_nav.dart';
+import 'package:flutter_task_13/main/login_register/login.dart';
+import 'package:flutter_task_13/main/login_register/register.dart';
+import 'package:flutter_task_13/main/profile/profile.dart';
+import 'package:flutter_task_13/main/splash/splas.dart';
+import 'package:flutter_task_13/main/splash/splas_2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => SplashScreen(),
         '/Splash': (context) => Splash(),
+        Profile.id: (context) => Profile(),
         BottomNav.id: (context) => BottomNav(),
         LoginScreen.id: (context) => LoginScreen(),
         RegisterScreen.id: (context) => RegisterScreen(),

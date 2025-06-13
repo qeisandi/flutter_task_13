@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/dbHelper/db_helper_home.dart';
-import 'package:flutter_task_13/project/home_screen/helper/user_model_home.dart';
-import 'package:flutter_task_13/project/login.dart';
+import 'package:flutter_task_13/Helper/dbHelper/db_helper_home.dart';
+import 'package:flutter_task_13/Helper/modelUser/model_cart.dart';
+import 'package:flutter_task_13/main/login_register/login.dart';
+import 'package:flutter_task_13/main/profile/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? nameUser;
+  String? usernameUser;
   final TextEditingController namaC = TextEditingController();
   final TextEditingController kategoriC = TextEditingController();
   final TextEditingController hargaC = TextEditingController();
@@ -19,6 +23,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     muatData();
+    ambilDataUser();
+  }
+
+  Future<void> ambilDataUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nameUser = prefs.getString('name') ?? 'No Name';
+      usernameUser = prefs.getString('username') ?? '@username';
+    });
   }
 
   Future<void> muatData() async {
@@ -108,42 +121,72 @@ class _HomeScreenState extends State<HomeScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff3B3B1A),
         centerTitle: true,
-        title: Text(
-          'EpruvShop',
-          style: TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 24,
-            color: Colors.white,
-          ),
+        title: Row(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(padding: EdgeInsets.symmetric(horizontal: 30)),
+            Icon(Icons.shopify, size: 30, color: Colors.white),
+            Text(
+              'EpruvShop',
+              style: TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
       drawer: Drawer(
         child: ListView(
           children: [
-            DrawerHeader(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Color(0xff3B3B1A),
-                    child: CircleAvatar(
-                      radius: 37,
-                      backgroundImage: AssetImage("assets/image/cat.jpg"),
-                    ),
-                  ),
-                  // SizedBox(height: 10),
-                  Column(
-                    children: [
-                      Text(
-                        'Andi Qeis',
-                        style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
+            SizedBox(
+              height: 200,
+              child: DrawerHeader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Color(0xff3B3B1A),
+                      child: CircleAvatar(
+                        radius: 37,
+                        backgroundImage: AssetImage("assets/image/cat.jpg"),
                       ),
-                      Text('Shopping List', style: TextStyle(fontSize: 13)),
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(height: 10),
+                    Column(
+                      children: [
+                        Text(
+                          nameUser ?? 'Loading...',
+                          style: TextStyle(fontFamily: 'Gilroy', fontSize: 24),
+                        ),
+                        Text(
+                          '@${usernameUser ?? 'username'}',
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text(
+                'Your Profile',
+                style: TextStyle(fontFamily: 'Gilroy'),
+              ),
+              onTap: () {
+                setState(() {
+                  Navigator.pushNamed(context, Profile.id);
+                });
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Setting', style: TextStyle(fontFamily: 'Gilroy')),
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.logout_outlined),
@@ -186,7 +229,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.shopify, size: 40, color: Color(0xff3B3B1A)),
               SizedBox(width: 4),
               Text(
                 'ShoppingList',

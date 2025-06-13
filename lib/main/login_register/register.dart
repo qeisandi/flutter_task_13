@@ -1,7 +1,9 @@
 // import 'package:flutter_task_13/project/dbHelper/Db_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/dbHelper/db_helper.dart';
-import 'package:flutter_task_13/project/modelUser/user_model.dart';
+import 'package:flutter_task_13/Helper/dbHelper/db_helper.dart';
+import 'package:flutter_task_13/Helper/modelUser/model_user.dart';
+import 'package:flutter_task_13/main/login_register/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const String id = "/register_screen";
@@ -82,15 +84,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         hintText: 'enter email',
-                        hintStyle: TextStyle(fontSize: 14),
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Email tidak boleh kosong";
-                        } else if (!value.contains("@")) {
+                          return "Email harus di isi";
+                        } else if (!value.contains("@gmail")) {
+                          return "Email tidak valid";
+                        } else if (!value.contains('.com')) {
                           return "Email tidak valid";
                         }
                         return null;
@@ -114,14 +118,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         hintText: 'enter Your Name',
-                        hintStyle: TextStyle(fontSize: 16),
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "name must be fill";
+                          return "nama harus di isi";
                         }
                         return null;
                       },
@@ -144,14 +148,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         hintText: 'enter username',
-                        hintStyle: TextStyle(fontSize: 14),
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "username must be fill";
+                          return "username harus di isi";
                         }
                         return null;
                       },
@@ -175,6 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: _hidden,
                       decoration: InputDecoration(
                         hintText: 'enter password',
+                        hintStyle: TextStyle(fontStyle: FontStyle.italic),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40),
                         ),
@@ -197,9 +202,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "password must be fill";
-                        } else if (value.length < 10) {
-                          return "Password not valid";
+                          return "password harus di isi";
+                        } else if (value.length < 6) {
+                          return "Password tidak valid";
                         }
                         return null;
                       },
@@ -209,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 122),
+                              padding: EdgeInsets.symmetric(horizontal: 115),
                             ),
                             TextButton(
                               onPressed: () {},
@@ -227,14 +232,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () {
-                            // Navigator.pop(context);
+                          onPressed: () async {
                             if (_fromKey.currentState!.validate()) {
                               print('email : ${emailC.text}');
                               print('name : ${nameC.text}');
                               print('username : ${usernameC.text}');
                               print('password : ${passC.text}');
-                              DbHelper.registerUser(
+
+                              // Simpan ke database
+                              await DbHelper.registerUser(
                                 data: UserModel(
                                   email: emailC.text,
                                   name: nameC.text,
@@ -242,12 +248,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   password: passC.text,
                                 ),
                               );
+
+                              // Simpan ke SharedPreferences
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString('name', nameC.text);
+                              await prefs.setString('username', usernameC.text);
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Register Succesful'),
+                                  content: Text('Register Berhasil'),
                                   backgroundColor: Colors.teal,
                                 ),
                               );
+
                               Navigator.pop(context);
                             }
                           },
@@ -280,7 +294,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, LoginScreen.id);
+                              },
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
@@ -294,97 +310,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                         SizedBox(height: 16),
-                        // Row(
-                        //   children: [
-                        //     Expanded(child: Divider()),
-                        //     Padding(
-                        //       padding: EdgeInsets.symmetric(horizontal: 8),
-                        //       child: Text(
-                        //         "Or Sign In With",
-                        //         style: TextStyle(
-                        //           fontSize: 14,
-                        //           color: Color(0xff888888),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     Expanded(child: Divider()),
-                        //   ],
-                        // ),
-                        // SizedBox(height: 40),
-                        // Row(
-                        //   children: [
-                        //     ElevatedButton(
-                        //       onPressed: () {},
-                        //       style: ElevatedButton.styleFrom(
-                        //         padding: EdgeInsets.symmetric(
-                        //           horizontal: 40,
-                        //           vertical: 16,
-                        //         ),
-                        //       ),
-                        //       child: Row(
-                        //         children: [
-                        //           Image.asset('assets/image/Google.png'),
-                        //           SizedBox(width: 20),
-                        //           Text(
-                        //             'Google',
-                        //             style: TextStyle(
-                        //               color: Colors.black,
-                        //               fontWeight: FontWeight.w300,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 24),
-                        //     ElevatedButton(
-                        //       onPressed: () {},
-                        //       style: ElevatedButton.styleFrom(
-                        //         padding: EdgeInsets.symmetric(
-                        //           horizontal: 40,
-                        //           vertical: 16,
-                        //         ),
-                        //       ),
-                        //       child: Row(
-                        //         children: [
-                        //           Image.asset("assets/image/Facebook.png"),
-                        //           SizedBox(width: 20),
-                        //           Text(
-                        //             'Facebook',
-                        //             style: TextStyle(
-                        //               color: Colors.black,
-                        //               fontWeight: FontWeight.w300,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(height: 20),
-                        // Row(
-                        //   children: [
-                        //     Text.rich(
-                        //       TextSpan(
-                        //         text: 'Dont have an account?',
-                        //         style: TextStyle(
-                        //           fontSize: 14,
-                        //           color: Color(0xff888888),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     TextButton(
-                        //       onPressed: () {},
-                        //       child: Text(
-                        //         "Join Us",
-                        //         style: TextStyle(
-                        //           fontSize: 14,
-                        //           color: Color(0xffEA9459),
-                        //           fontWeight: FontWeight.w800,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ],

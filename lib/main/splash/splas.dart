@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/login.dart';
-import 'package:flutter_task_13/project/register.dart';
+import 'package:flutter_task_13/main/login_register/login.dart';
+import 'package:flutter_task_13/main/login_register/register.dart';
 
 class Splash extends StatefulWidget {
   static const String id = "/Splash";
@@ -16,19 +16,22 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff3B3B1A),
-        // leading: IconButton(
-        //   onPressed: () {},
-        //   icon: IconButton(
-        //     onPressed: () {},
-        //     icon: Icon(Icons.keyboard_arrow_left_sharp),
-        //   ),
-        // ),
-        title: Center(
-          child: Text(
-            'EpruvShop',
-            style: TextStyle(fontFamily: 'Gilroy', color: Colors.white),
-          ),
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.shopify, size: 30, color: Colors.white),
+            Text(
+              'EpruvShop',
+              style: TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -47,74 +50,32 @@ class _SplashState extends State<Splash> {
                 ),
               ),
             ),
-            // SizedBox(height: 20),
-            // Text(
-            //   'Sign in to your account',
-            //   style: TextStyle(fontSize: 14, color: Color(0xff888888)),
-            // ),
-            // SizedBox(height: 28),
-            // Expanded(
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Text(
-            //             'Email Address',
-            //             style: TextStyle(
-            //               fontSize: 13,
-            //               color: Color(0xff888888),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       SizedBox(height: 16),
-            //       SizedBox(height: 20),
-            //       Row(
-            //         children: [
-            //           Text(
-            //             'Password',
-            //             style: TextStyle(
-            //               fontSize: 13,
-            //               color: Color(0xff888888),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       SizedBox(height: 16),
-            // Column(
-            //   children: [
-            //     Row(
-            //       children: [
-            //         Padding(padding: EdgeInsets.symmetric(horizontal: 122)),
-            //         TextButton(
-            //           onPressed: () {},
-            //           child: Text(
-            //             'Forgot Password?',
-            //             style: TextStyle(
-            //               fontSize: 12,
-            //               color: Color(0xffEA9459),
-            //               fontWeight: FontWeight.w800,
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
             SizedBox(height: 200),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xff3B3B1A),
-                padding: EdgeInsets.symmetric(horizontal: 175, vertical: 16),
-              ),
-              child: Text(
-                'Login',
-                style: TextStyle(fontFamily: 'Gilroy', color: Colors.white),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff3B3B1A),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 150,
+                      vertical: 16,
+                    ),
+                  ),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(fontFamily: 'Gilroy', color: Colors.white),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 12),
             Row(
@@ -157,11 +118,12 @@ class _SplashState extends State<Splash> {
             ),
             SizedBox(height: 40),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 16),
                     // backgroundColor: Color(0xffAEC8A4),
                   ),
                   child: Row(
@@ -182,7 +144,7 @@ class _SplashState extends State<Splash> {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 16),
                   ),
                   child: Row(
                     children: [

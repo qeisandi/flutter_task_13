@@ -1,8 +1,8 @@
 // import 'package:flutter_task_13/project/dbHelper/Db_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/bottom_nav.dart/bottom_nav.dart';
-import 'package:flutter_task_13/project/dbHelper/db_helper.dart';
-import 'package:flutter_task_13/project/register.dart';
+import 'package:flutter_task_13/Helper/dbHelper/db_helper.dart';
+import 'package:flutter_task_13/main/bottom_nav.dart/bottom_nav.dart';
+import 'package:flutter_task_13/main/login_register/register.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = "/login_screen";
@@ -87,7 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Email tidak boleh kosong";
-                      } else if (!value.contains("@")) {
+                      } else if (!value.contains("@gmail")) {
+                        return "Email tidak valid";
+                      } else if (!value.contains(".com")) {
                         return "Email tidak valid";
                       }
                       return null;
@@ -136,9 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "password must be fill";
-                      } else if (value.length < 10) {
-                        return "Password not valid";
+                        return "password harus di isi";
+                      } else if (value.length < 6) {
+                        return "Password tidak valid";
                       }
                       return null;
                     },
@@ -149,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 122),
+                            padding: EdgeInsets.symmetric(horizontal: 115),
                           ),
                           TextButton(
                             onPressed: () {},
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff3B3B1A),
                           padding: EdgeInsets.symmetric(
-                            horizontal: 160,
+                            horizontal: 150,
                             vertical: 16,
                           ),
                         ),
@@ -250,12 +252,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: 40),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 40,
+                                horizontal: 35,
                                 vertical: 16,
                               ),
                             ),
@@ -278,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 40,
+                                horizontal: 35,
                                 vertical: 16,
                               ),
                             ),

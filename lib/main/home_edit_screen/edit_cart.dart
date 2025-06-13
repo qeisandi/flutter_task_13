@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_13/project/dbHelper/db_helper_home.dart';
-import 'package:flutter_task_13/project/home_screen/helper/user_model_home.dart';
+import 'package:flutter_task_13/Helper/dbHelper/db_helper_home.dart';
+import 'package:flutter_task_13/Helper/modelUser/model_cart.dart';
 // import 'package:sqflite/sqflite.dart';
 
 class EditCart extends StatefulWidget {
@@ -56,15 +56,23 @@ class _EditCartState extends State<EditCart> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Color(0xff3B3B1A),
         centerTitle: true,
-        title: Text(
-          'EpruvShop',
-          style: TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 24,
-            color: Colors.white,
-          ),
+        title: Row(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(padding: EdgeInsets.symmetric(horizontal: 30)),
+            Icon(Icons.shopify, size: 30, color: Colors.white),
+            Text(
+              'EpruvShop',
+              style: TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
       body: Column(
